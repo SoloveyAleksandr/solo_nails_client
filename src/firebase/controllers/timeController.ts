@@ -14,7 +14,7 @@ export default function useTime() {
   const dayRef = collection(DB, 'day');
   const freeTimeRef = collection(DB, 'freeTime');
   const reservesRef = collection(DB, 'reserves');
-  const waitingRef = collection(DB, 'reserves');
+  const waitingRef = collection(DB, 'waiting');
   const userRef = collection(DB, "user");
 
   const errorHandler = (error: any) => {
@@ -81,7 +81,7 @@ export default function useTime() {
       const date = time.date.full;
       const timeRef = doc(waitingRef, date);
       await updateDoc(timeRef, {
-        ['waiting.' + [id]]: time
+        ['timeList.' + [id]]: time
       })
     } catch (e) {
       errorHandler(e);
@@ -173,8 +173,6 @@ export default function useTime() {
 
   const bookATime = async (time: ITimeItem) => {
     try {
-      const id = time.id;
-      const date = time.date.full;
       await setTimeToDay(time);
       await setTimeToWaiting(time);
       await removeTimeFromFreeTime(time);
