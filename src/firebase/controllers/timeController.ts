@@ -35,6 +35,7 @@ export default function useTime() {
   // ['timeList.' + [time.id]]: deleteField()
 
   // ADD TIME FUNCS
+  // 
   const setTimeToDay = async (time: ITimeItem) => {
     try {
       const id = time.id;
@@ -88,6 +89,7 @@ export default function useTime() {
   };
 
   // REMOVE TIME FUNCS
+  // 
   const removeTimeFromDay = async (time: ITimeItem) => {
     try {
       const date = time.date.full;
@@ -126,6 +128,20 @@ export default function useTime() {
     }
   };
 
+  const removeTimeFromWaiting = async (time: ITimeItem) => {
+    try {
+      const date = time.date.full;
+      const timeRef = doc(waitingRef, date);
+      await updateDoc(timeRef, {
+        ['timeList.' + [time.id]]: deleteField()
+      });
+    } catch (e) {
+      errorHandler(e);
+    }
+  };
+
+  //
+  //
   const getAllReserves = async () => {
     try {
       const data: IReserveItem[] = [];
@@ -139,6 +155,9 @@ export default function useTime() {
     }
   };
 
+
+  //
+  //
   const getFreeTime = async () => {
     try {
       const data: IReserveItem[] = [];
@@ -173,6 +192,7 @@ export default function useTime() {
     removeTimeFromDay,
     removeTimeFromFreeTime,
     removeTimeFromReserves,
+    removeTimeFromWaiting,
 
     getAllReserves,
     getFreeTime,
