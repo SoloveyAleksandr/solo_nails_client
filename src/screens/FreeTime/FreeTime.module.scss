@@ -1,0 +1,114 @@
+@import "../../var";
+
+.btn {
+  &List {
+    list-style: none;
+    display: flex;
+    align-items: center;
+  }
+
+  &Item+&Item {
+    margin-left: 15px;
+  }
+}
+
+.days {
+  &List {
+    list-style: none;
+  }
+
+  &Item {
+    margin-top: 15px;
+    border: 1px solid $white;
+    border-radius: 8px;
+
+    &Header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: $white;
+      font-size: 18px;
+      font-weight: 700;
+    }
+  }
+
+  &Btns {
+    display: flex;
+    align-items: center;
+  }
+
+  &Link {
+    margin-right: 30px;
+  }
+}
+
+.time {
+  &List {
+    list-style: none;
+
+    .timeItem+.timeItem {
+      margin-top: 10px;
+    }
+  }
+
+  &Item {
+    &Title {
+      font-size: 16px;
+      font-weight: 700;
+      color: $white;
+    }
+  }
+}
+
+.modal {
+  &Title {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    display: block;
+  }
+
+  &List {
+    list-style: none;
+
+    &Item+&Item {
+      margin-top: 15px;
+    }
+  }
+
+  &ItemLabel {
+    color: $black;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &BtnWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+}
+
+.switchWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.oflineInfoList {
+  list-style: none;
+  overflow: hidden;
+  transform-origin: top center;
+  transition: 0.5s;
+  margin-top: 0;
+  max-height: 0;
+
+  &.open {
+    max-height: 500px;
+    height: fit-content;
+    margin-bottom: 30px;
+    margin-top: 15px;
+  }
+}

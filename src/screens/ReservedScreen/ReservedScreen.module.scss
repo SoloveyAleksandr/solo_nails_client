@@ -1,0 +1,116 @@
+@import "../../var";
+
+.days {
+  &List {
+    list-style: none;
+  }
+
+  &Item {
+    margin-top: 15px;
+    border: 1px solid $white;
+    border-radius: 8px;
+
+    &Header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: $white;
+      font-size: 18px;
+      font-weight: 700;
+    }
+  }
+
+  &Btns {
+    display: flex;
+    align-items: center;
+  }
+
+  &Link {
+    margin-right: 30px;
+  }
+}
+
+.time {
+  &List {
+    list-style: none;
+
+    .timeItem+.timeItem {
+      margin-top: 10px;
+    }
+  }
+
+  &Item {
+    &Title {
+      font-size: 16px;
+      font-weight: 700;
+      color: $white;
+    }
+  }
+}
+
+.btnWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .btn+.btn {
+    margin-left: 15px;
+  }
+}
+
+.info {
+  &List {
+    list-style: none;
+  }
+
+  &Item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  &Title {
+    text-transform: uppercase;
+  }
+
+  &Comment {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+}
+
+.cancel {
+  &Body {
+    font-weight: 600;
+    text-transform: none;
+  }
+
+  &Btn {
+    margin-bottom: 15px;
+  }
+
+  &Title {
+    width: 100%;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  &Close {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.popover {
+  box-shadow: 0px 0px 10px $black50;
+  padding-top: 25px;
+}

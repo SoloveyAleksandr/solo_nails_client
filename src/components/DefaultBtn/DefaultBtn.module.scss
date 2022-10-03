@@ -1,0 +1,34 @@
+@import "../../var";
+
+.btn {
+  width: 135px;
+  height: 40px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background-color: $white20;
+  color: $black;
+  transition: 0.3s;
+  outline: none;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: "Jost";
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: $white20;
+    color: $blackHover;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &.dark {
+    border-color: $black;
+    &:hover {
+      background-color: $black;
+      color: $white;
+    }
+  }
+}

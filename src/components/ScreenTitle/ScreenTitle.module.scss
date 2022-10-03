@@ -1,0 +1,16 @@
+@import "../../var";
+
+.wrapper {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  border-top: 2px solid $white50;
+  border-bottom: 2px solid $white50;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 900;
+  color: $white;
+  text-transform: uppercase;
+}

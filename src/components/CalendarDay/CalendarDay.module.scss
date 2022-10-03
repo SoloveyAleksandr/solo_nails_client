@@ -1,0 +1,31 @@
+@import "../../var";
+
+.calendarDay {
+  height: 60px;
+  background-color: $white20;
+  color: $white;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Teko";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  position: relative;
+  border: 1px solid $white;
+  color: #fff;
+
+  &.disabled {
+    filter: blur(1px) opacity(50%);
+  }
+}
+
+.marker {
+  background-color: $greenMark;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}

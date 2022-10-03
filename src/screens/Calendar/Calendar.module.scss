@@ -1,0 +1,15 @@
+.menuList {
+    padding: 30px 0 0 30px;
+    list-style: none;
+    .menuItem + .menuItem {
+        margin-top: 15px;
+    }
+}
+
+.calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6);
+    grid-gap: 4px;
+    padding: 0 4px;
+}

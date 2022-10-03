@@ -1,0 +1,129 @@
+@import "../../var";
+
+.plusBtnWrapper {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+}
+
+.price {
+  &List {
+    list-style: none;
+  }
+
+  &Item {
+    border: 1px solid $white50;
+    border-radius: 8px;
+    color: $white;
+    position: relative;
+    box-shadow: 0 0 10px $white50;
+    background-color: $white10;
+    margin-top: 15px;
+  }
+
+  &Header {
+    height: 40px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $white50;
+  }
+
+  &Title {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &Count {
+    font-family: 'Teko';
+    font-size: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0 10px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    border-top: 1px solid $white50;
+  }
+
+  &Value {
+    font-size: 10px;
+    transform: translateY(5px);
+  }
+}
+
+.headerBtns {
+  display: flex;
+  align-items: center;
+
+  .headerBtn+.headerBtn {
+    margin-left: 20px;
+  }
+}
+
+.service {
+  &List {
+    list-style: decimal;
+    padding: 10px 10px 10px 30px;
+  }
+
+  &Item {
+    position: relative;
+    font-size: 18px;
+    font-weight: 600;
+    color: $white80;
+  }
+}
+
+.modal {
+  &List {
+    list-style: none;
+    margin-bottom: 15px;
+
+    &Item {
+      margin: 10px 0px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &Input {
+    width: 100%;
+    height: 30px;
+    border-radius: 8px;
+    border: 2px solid $black;
+    padding: 0 30px 0 10px;
+
+    &Btn {
+      position: absolute;
+      right: 5px;
+    }
+  }
+
+  &AddBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 0;
+  }
+
+  &BtnWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &Price {
+    margin-bottom: 25px;
+  }
+}
+
+.boxTitle {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}

@@ -1,0 +1,57 @@
+.spinerWrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to bottom right, rgb(83, 63, 64), rgba(122, 105, 108, 0.7));
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    width: 60px;
+    height: 60px;
+    background-image: url(../../images/loading-96.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    animation: spiner 1.3s linear 0s infinite normal;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    height: 45%;
+    width: 100%;
+    background-image: url(../../images/logo-bg.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+  }
+}
+
+@keyframes spiner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

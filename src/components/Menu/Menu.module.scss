@@ -1,0 +1,28 @@
+@import "../../var";
+
+.menu {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    padding-top: 55px;
+    min-height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+    color: $white;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: url(../../images/logo-bg.png),
+        linear-gradient(to bottom right, rgb(83, 63, 64), rgba(122, 105, 108, 0.7));
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.menu.active {
+    opacity: 1;
+    pointer-events: all;
+}
+// rgb(80, 45, 56)

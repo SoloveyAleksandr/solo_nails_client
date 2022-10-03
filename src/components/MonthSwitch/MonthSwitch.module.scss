@@ -1,0 +1,43 @@
+@import "../../var";
+
+.monthSwitch {
+  display: grid;
+  grid-template-columns: 30% 40% 30%;
+  grid-template-rows: repeat(1);
+  padding: 10px 0 10px 0;
+  border: 1px solid $white50;
+  border-left: none;
+  border-right: none;
+  position: relative;
+}
+
+.month {
+  text-transform: uppercase;
+  font-size: 17px;
+  font-weight: 900;
+  color: $white50;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &.current {
+    font-size: 28px;
+    color: $white;
+  }
+}
+
+.year {
+  display: inline-block;
+  width: 36px;
+  text-align: center;
+  position: absolute;
+  color: rgba(255, 255, 255, 0.8);
+  bottom: -4px;
+  left: calc(50% - 18px);
+}
+
+.year span {
+  font-family: "Teko";
+  font-weight: 900;
+  font-size: 18px;
+}

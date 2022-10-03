@@ -1,0 +1,42 @@
+@import '../../var';
+
+.buttonWrapper {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  position: relative;
+  width: 30px;
+}
+
+.button,
+.button::before,
+.button::after {
+  height: 5px;
+  border-radius: 5px;
+  background-color: $white;
+}
+
+.button::before,
+.button::after {
+  content: '';
+  position: absolute;
+}
+
+.button::before {
+  width: 20px;
+  transform: rotate(-45deg);
+  left: -2px;
+  top: -5px;
+}
+
+.button::after {
+  width: 15px;
+  transform: rotate(45deg);
+  left: -1px;
+  top: 5px;
+}
