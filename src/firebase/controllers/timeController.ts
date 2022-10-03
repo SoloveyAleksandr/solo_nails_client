@@ -14,6 +14,7 @@ export default function useTime() {
   const dayRef = collection(DB, 'day');
   const freeTimeRef = collection(DB, 'freeTime');
   const reservesRef = collection(DB, 'reserves');
+  const waitingRef = collection(DB, 'reserves');
   const userRef = collection(DB, "user");
 
   const errorHandler = (error: any) => {
@@ -67,6 +68,19 @@ export default function useTime() {
       const timeRef = doc(reservesRef, date);
       await updateDoc(timeRef, {
         ['timeList.' + [id]]: time
+      })
+    } catch (e) {
+      errorHandler(e);
+    }
+  };
+
+  const setTimeToWaiting = async (time: ITimeItem) => {
+    try {
+      const id = time.id;
+      const date = time.date.full;
+      const timeRef = doc(waitingRef, date);
+      await updateDoc(timeRef, {
+        ['waiting.' + [id]]: time
       })
     } catch (e) {
       errorHandler(e);
@@ -139,17 +153,12 @@ export default function useTime() {
   };
 
   const bookATime = async (time: ITimeItem) => {
-    try { 
+    try {
       const id = time.id;
       const date = time.date.full;
-      const dayTimeRef = doc(dayRef, date);
-      const awaitingTimeRef = doc(dayRef, date);
-      await updateDoc(dayTimeRef, {
-        ['timeList.' + [id]]: time
-      });
-      await updateDoc(awaitingTimeRef, {
-        ['timeList.' + [id]]: time
-      });
+      await setTimeToDay(time);
+      await setTimeToWaiting(time);
+      await removeTimeFromFreeTime(time);
     } catch (e) {
       errorHandler(e);
     }
@@ -159,6 +168,7 @@ export default function useTime() {
     setTimeToDay,
     setTimeToFreeTime,
     setTimeToReserves,
+    setTimeToWaiting,
 
     removeTimeFromDay,
     removeTimeFromFreeTime,

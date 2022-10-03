@@ -91,7 +91,7 @@ const DayScreen: FC = () => {
           confirmed: false,
         }
       });
-      await bookATime({...newTimeItem});
+      await bookATime({ ...newTimeItem });
       await getDay();
     } catch (e) {
       console.log(e);
@@ -170,12 +170,12 @@ const DayScreen: FC = () => {
         <div className={styles.formBtns}>
           <DefaultBtn
             dark={true}
-            value={'отмена'}
-            handleClick={() => setTimeForm(false)} />
-          <DefaultBtn
-            dark={true}
             value={'подтвердить'}
             handleClick={setReserve} />
+          <DefaultBtn
+            dark={true}
+            value={'отмена'}
+            handleClick={() => setTimeForm(false)} />
         </div>
 
       </ModalConteiner>
