@@ -138,23 +138,22 @@ export default function useTime() {
     }
   };
 
-  // const bookATime = async (
-  //   timeItem: ITimeItem,
-  //   comment: string,
-  // ) => {
-  //   try {
-  //     const timeRef = doc(dayRef, timeItem.date.full);
-  //     await updateDoc(timeRef, {
-  //       [`timeList.${timeItem.id}.client.uid`]: appState.currentUser.uid,
-  //       [`timeList.${timeItem.id}.client.comment`]: comment,
-  //       [`timeList.${timeItem.id}.isReserved`]: true,
-  //     });
-  //     await setReserve(timeItem.id, comment);
-  //     await addHistoryItem(appState.currentUser.uid, timeItem);
-  //   } catch (e) {
-  //     errorHandler(e);
-  //   }
-  // }
+  const bookATime = async (time: ITimeItem) => {
+    try { 
+      const id = time.id;
+      const date = time.date.full;
+      const dayTimeRef = doc(dayRef, date);
+      const awaitingTimeRef = doc(dayRef, date);
+      await updateDoc(dayTimeRef, {
+        ['timeList.' + [id]]: time
+      });
+      await updateDoc(awaitingTimeRef, {
+        ['timeList.' + [id]]: time
+      });
+    } catch (e) {
+      errorHandler(e);
+    }
+  }
 
   return {
     setTimeToDay,
@@ -167,5 +166,7 @@ export default function useTime() {
 
     getAllReserves,
     getFreeTime,
+
+    bookATime,
   }
 }

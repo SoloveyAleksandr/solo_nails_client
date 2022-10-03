@@ -3,8 +3,8 @@ import { FC } from 'react';
 import styles from './DefaultBtn.module.scss';
 
 interface IDefaultBtn {
-  type: "button" | "reset" | "submit";
   value: string;
+  type?: "button" | "reset" | "submit";
   handleClick?: () => void;
   disabled?: boolean,
   dark?: boolean,

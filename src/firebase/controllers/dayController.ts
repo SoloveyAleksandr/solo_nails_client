@@ -12,6 +12,7 @@ export default function useDay() {
   const dayRef = collection(DB, 'day');
   const freeTimeRef = collection(DB, 'freeTime');
   const reservesRef = collection(DB, 'reserves');
+  const waitingRef = collection(DB, 'waiting');
 
   const errorHandler = (error: any) => {
     interface IError {
@@ -35,6 +36,7 @@ export default function useDay() {
       await setDoc(doc(dayRef, date.full), { ...new Day(date) });
       await setDoc(doc(freeTimeRef, date.full), { ...new Reserve(date) });
       await setDoc(doc(reservesRef, date.full), { ...new Reserve(date) });
+      await setDoc(doc(waitingRef, date.full), { ...new Reserve(date) });
     } catch (e) {
       errorHandler(e);
     }

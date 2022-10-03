@@ -1,81 +1,60 @@
 @import "../../var";
 
-.day {
-  position: relative;
-}
-
 .plusBtn {
-  border-radius: 50%;
-  width: 60px;
+  width: 200px;
   height: 60px;
+  border-radius: 8px;
+  border: 2px solid $white;
+  background-color: $white20;
+  color: $white;
+  font-size: 18px;
+  font-weight: 700;
+  animation: btn 1s linear 3s infinite;
 
   &Wrapper {
     position: fixed;
     bottom: 25px;
-    right: 25px;
+    left: calc(50% - 100px);
   }
 }
 
-.timeInp {
-  color: $black;
-  font-size: 16px;
-  font-weight: 700;
+@keyframes btn {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-.modal {
+.form {
   &Title {
     font-size: 20px;
     font-weight: 700;
     text-align: center;
     display: block;
+    margin-bottom: 25px;
   }
 
-  &List {
-    list-style: none;
-
-    &Item+&Item {
-      margin-top: 15px;
-    }
-  }
-
-  &ItemLabel {
-    color: $black;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  &BtnWrapper {
+  &Btns {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 15px;
   }
 }
 
-.switchWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.oflineInfoList {
-  list-style: none;
-  overflow: hidden;
-  transform-origin: top center;
-  transition: 0.5s;
-  margin-top: 0;
-  max-height: 0;
-
-  &.open {
-    max-height: 500px;
-    height: fit-content;
-    margin-bottom: 30px;
-    margin-top: 15px;
-  }
-}
 
 .time {
+  &Title {
+    color: $white;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 15px;
+  }
   &List {
     list-style: none;
   }
@@ -92,7 +71,8 @@
     background-color: $white20;
 
     &.reserved {
-      box-shadow: 0 0 15px $white50;
+      opacity: 0.5;
+      pointer-events: none;
     }
 
     &Time {
@@ -109,7 +89,7 @@
     display: flex;
     align-items: center;
 
-    &Item+&Item {
+    &Item + &Item {
       margin-left: 20px;
     }
   }
