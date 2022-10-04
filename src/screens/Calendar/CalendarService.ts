@@ -58,7 +58,7 @@ export const getMonth = (selMonth: number, selYear: number) => {
     const isToday = moment().format('DD.MM.YYYY') === dayFormat ? true : false;
     return {
       date: {
-        full: day.format('x'),
+        full: Number(day.format('x')),
         formate: dayFormat,
       },
       day: dayFormat.slice(0, 2),

@@ -2,7 +2,7 @@ import { IDay, ITimeItem } from "../../interfaces";
 
 export class Day {
   date: {
-    full: string,
+    full: number,
     formate: string
   };
   timeList: {
@@ -11,7 +11,7 @@ export class Day {
 
   constructor(
     date: {
-      full: string,
+      full: number,
       formate: string
     },
     timeList: {
@@ -38,7 +38,7 @@ export const sortTimesList = (day: IDay) => {
 };
 
 export const sortByDate = (a: ITimeItem, b: ITimeItem) => {
-  return Number(a.date.full) - Number(b.date.full);
+  return a.date.full - b.date.full;
 };
 
 export const sortReserves = (a: ITimeItem, b: ITimeItem) => {

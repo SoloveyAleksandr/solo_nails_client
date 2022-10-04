@@ -4,7 +4,7 @@ import { IDay, IDayItem, ISelectedDate, IUser } from '../interfaces';
 const month: number = 0;
 const year: number = 0;
 const selectedDate: ISelectedDate = {
-  full: '',
+  full: 0,
   formate: '',
 };
 const selectedMonth: IDayItem[] = [];
@@ -27,7 +27,7 @@ const isLogged: boolean = false;
 
 const selectedDay: IDay = {
   date: {
-    full: '',
+    full: 0,
     formate: '',
   },
   timeList: {},

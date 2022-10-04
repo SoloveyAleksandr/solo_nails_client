@@ -39,7 +39,7 @@ const DayScreen: FC = () => {
     isReserved: false,
     time: '',
     date: {
-      full: '',
+      full: 0,
       formate: '',
     },
     client: {

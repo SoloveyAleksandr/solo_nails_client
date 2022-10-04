@@ -6,7 +6,7 @@ export class Time {
   isReserved: boolean;
   time: string;
   date: {
-    full: string,
+    full: number,
     formate: string
   };
   client: {
@@ -26,7 +26,7 @@ export class Time {
       id?: string,
       time: string,
       date: {
-        full: string,
+        full: number,
         formate: string
       },
       isReserved?: boolean,
@@ -66,7 +66,7 @@ export class TimeConverter {
   isReserved: boolean;
   time: string;
   date: {
-    full: string,
+    full: number,
     formate: string
   };
   client: {
@@ -109,14 +109,14 @@ export const timeConverter = {
 
 export class Reserve {
   date: {
-    full: string,
+    full: number,
     formate: string
   };
   timeList: {
     [key: string]: ITimeItem
   };
   constructor(date: {
-    full: string,
+    full: number,
     formate: string,
   }) {
     this.date = date;
