@@ -9,7 +9,7 @@
   color: $white;
   font-size: 18px;
   font-weight: 700;
-  animation: btn 1s linear 3s infinite;
+  animation: btn 2s linear infinite;
 
   &Wrapper {
     position: fixed;
@@ -45,7 +45,6 @@
     justify-content: space-between;
   }
 }
-
 
 .time {
   &Title {

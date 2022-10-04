@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import BackBtn from '../../components/BackBtn/BackBtn';
 import Container from '../../components/Container/Container';
 import Header from '../../components/Header/Header';
@@ -18,6 +18,7 @@ import FormInput from '../../components/FormInput/FormInput';
 import { PhoneIcon } from '@chakra-ui/icons';
 import { setLoading } from '../../store';
 import useAuth from '../../firebase/controllers/userController';
+import { IHistoryItem } from '../../interfaces';
 
 const MyAccount: FC = () => {
   const appState = useAppSelector(store => store.AppStore);
@@ -25,11 +26,29 @@ const MyAccount: FC = () => {
   const { setName, setInst, getCurrentUser } = useAuth();
   const toast = useToast();
 
-  const history = Object.values(appState.currentUserInfo.history);
   const [editModal, setEditModal] = useState(false);
   const [editModalValue, setEditModalValue] = useState('');
   const [editModalTitle, setEditModalTitle] = useState('');
   const [editModalPlaceholder, setEditModalPlaceholder] = useState('');
+  const [history, setHistory] = useState<IHistoryItem[]>([]);
+
+  const getUser = async () => {
+    try {
+      reduxDispatch(setLoading(true));
+      const user = await getCurrentUser();
+      setHistory(Object.values(appState.currentUserInfo.history));
+    } catch (e) {
+      console.log(e);
+    } finally {
+      reduxDispatch(setLoading(false));
+    }
+  }
+
+  useEffect(() => {
+    (async () => {
+      await getUser();
+    })();
+  }, []);
 
   const saveEditProp = async () => {
     try {
@@ -183,7 +202,7 @@ const MyAccount: FC = () => {
             {history.map(item => (
               <li className={styles.historyItem}>
                 <InfoContainer>
-                  <span>{item.date.formate}</span>
+                  <span>{item.time.date.formate}</span>
                   <span>{item.status}</span>
                 </InfoContainer>
               </li>

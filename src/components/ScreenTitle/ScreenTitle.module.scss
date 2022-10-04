@@ -1,11 +1,14 @@
 @import "../../var";
 
 .wrapper {
+  border-top: 2px solid $white50;
+  border-bottom: 2px solid $white50;
+}
+
+.contentWrapper {
   height: 70px;
   display: flex;
   align-items: center;
-  border-top: 2px solid $white50;
-  border-bottom: 2px solid $white50;
 }
 
 .title {

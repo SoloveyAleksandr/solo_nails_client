@@ -117,21 +117,6 @@ export default function useAuth() {
         }
     };
 
-    const removeHistoryItem = async (uid: string, item: IHistoryItem) => {
-        try {
-            const timeRef = doc(dayRef, item.date.full);
-            await updateDoc(doc(userRef, uid), {
-                ['history.' + [item.id]]: deleteField(),
-            });
-            await updateDoc(timeRef, {
-                ['timeList.' + [item.id]]: deleteField()
-            });
-            await deleteReserve(item.id);
-        } catch (e) {
-            errorHandler(e);
-        }
-    };
-
     const setHictoryStatus = async (uid: string, itemID: string, status: 'canceled' | 'success' | 'await') => {
         try {
             await updateDoc(doc(userRef, uid), {

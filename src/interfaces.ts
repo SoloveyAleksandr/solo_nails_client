@@ -64,11 +64,7 @@ export interface IUser {
 
 export interface IHistoryItem {
   id: string,
-  time: string,
-  date: {
-    full: string,
-    formate: string,
-  },
+  time: ITimeItem,
   status: 'await' | 'success' | 'canceled',
 }
 

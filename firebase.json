@@ -8,7 +8,39 @@
     ],
     "rewrites": [
       {
-        "source": "**",
+        "source": "/*",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/day",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/my-account",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/reserved",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/free-time",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/services",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/waiting",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/user",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/calendar",
         "destination": "/index.html"
       }
     ]

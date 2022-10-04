@@ -5,10 +5,12 @@
   grid-template-columns: 30% 40% 30%;
   grid-template-rows: repeat(1);
   padding: 10px 0 10px 0;
-  border: 1px solid $white50;
-  border-left: none;
-  border-right: none;
   position: relative;
+  &Wrapper {
+    border: 1px solid $white50;
+    border-left: none;
+    border-right: none;
+  }
 }
 
 .month {

@@ -12,11 +12,11 @@ const ScreenTitle: FC<IScreenTitle> = ({
 }) => {
   return (
     <div className={styles.wrapper}>
-      <div className={styles.contentWrapper}>
-        <Container>
+      <Container>
+        <div className={styles.contentWrapper}>
           <h4 className={styles.title}>{title}</h4>
-        </Container>
-      </div>
+        </div>
+      </Container>
     </div>
   );
 };

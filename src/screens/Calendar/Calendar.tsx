@@ -16,6 +16,7 @@ import { useToast } from '@chakra-ui/react';
 import styles from './Calendar.module.scss';
 import { NavLink } from 'react-router-dom';
 import { useService } from '../../firebase/controllers/serviceController';
+import Container from '../../components/Container/Container';
 
 const Calendar: FC = () => {
   const { userSignOut } = useAuth();
@@ -118,18 +119,21 @@ const Calendar: FC = () => {
               nextMonth={() => { reduxDispatch(setNextMonth()) }}
               month={appState.month}
               year={appState.year} />
-            <WeekDays />
 
-            <div className={styles.calendarGrid}>
-              {appState.selectedMonth.map(day =>
-                <CalendarDay
-                  key={day.date.full}
-                  day={day}
-                  selectDay={() => setDate(day.date)}
-                  prevMonth={() => reduxDispatch(setPrevMonth())}
-                  nextMonth={() => reduxDispatch(setNextMonth())} />
-              )}
-            </div>
+            <Container>
+              <WeekDays />
+
+              <div className={styles.calendarGrid}>
+                {appState.selectedMonth.map(day =>
+                  <CalendarDay
+                    key={day.date.full}
+                    day={day}
+                    selectDay={() => setDate(day.date)}
+                    prevMonth={() => reduxDispatch(setPrevMonth())}
+                    nextMonth={() => reduxDispatch(setNextMonth())} />
+                )}
+              </div>
+            </Container>
           </>
           :
           <h1>Попробуйте позже</h1>

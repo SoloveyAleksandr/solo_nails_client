@@ -75,16 +75,11 @@ export const userConverter = {
 
 export class History {
   id: string;
-  time: string;
-  date: {
-    full: string,
-    formate: string
-  };
+  time: ITimeItem;
   status: 'await' | 'success' | 'canceled';
   constructor(time: ITimeItem) {
     this.id = time.id;
-    this.time = time.time;
-    this.date = time.date;
+    this.time = time;
     this.status = 'await';
   }
 }
