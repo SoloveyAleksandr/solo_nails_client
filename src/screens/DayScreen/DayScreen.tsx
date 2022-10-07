@@ -89,7 +89,8 @@ const DayScreen: FC = () => {
         client: {
           uid: appState.currentUserInfo.uid,
           confirmed: false,
-        }
+        },
+        isReserved: true,        
       });
       await bookATime({ ...newTimeItem });
       await getDay();

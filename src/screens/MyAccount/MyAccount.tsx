@@ -32,7 +32,13 @@ const MyAccount: FC = () => {
   const [editModalPlaceholder, setEditModalPlaceholder] = useState('');
   const [history, setHistory] = useState<IHistoryItem[]>([]);
 
-  const getUser = async () => {
+  useEffect(() => {
+    (async () => {
+      await getUser();
+    })();
+  }, []);
+
+  async function getUser() {
     try {
       reduxDispatch(setLoading(true));
       const user = await getCurrentUser();
@@ -43,12 +49,6 @@ const MyAccount: FC = () => {
       reduxDispatch(setLoading(false));
     }
   }
-
-  useEffect(() => {
-    (async () => {
-      await getUser();
-    })();
-  }, []);
 
   const saveEditProp = async () => {
     try {
@@ -200,9 +200,11 @@ const MyAccount: FC = () => {
           </span>
           <ul className={styles.historyList}>
             {history.map(item => (
-              <li className={styles.historyItem}>
+              <li
+                key={item.id}
+                className={styles.historyItem}>
                 <InfoContainer>
-                  <span>{item.time.date.formate}</span>
+                  <span>{item.time.date.formate} {item.time.time}</span>
                   <span>{item.status}</span>
                 </InfoContainer>
               </li>
