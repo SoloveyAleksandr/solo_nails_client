@@ -20,23 +20,11 @@
         "destination": "/index.html"
       },
       {
-        "source": "/reserved",
-        "destination": "/index.html"
-      },
-      {
         "source": "/free-time",
         "destination": "/index.html"
       },
       {
         "source": "/services",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/waiting",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/user",
         "destination": "/index.html"
       },
       {
