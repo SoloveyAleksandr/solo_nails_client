@@ -8,19 +8,11 @@ import ScreenTitle from '../../components/ScreenTitle/ScreenTitle';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   IconButton,
-  Input,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverTrigger,
-  Switch,
   useToast,
 } from '@chakra-ui/react';
 import DefaultBtn from '../../components/DefaultBtn/DefaultBtn';
 import ModalConteiner from '../../components/ModalContainer/ModalContainer';
-import { CheckIcon, CloseIcon, ExternalLinkIcon, InfoIcon, PhoneIcon } from '@chakra-ui/icons';
+import { CheckIcon, CloseIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import { setLoading, setSelectedDate } from '../../store';
 import { IReserveItem, ITimeItem } from '../../interfaces';
 import useTime from '../../firebase/controllers/timeController';
@@ -35,7 +27,6 @@ import { NavLink } from 'react-router-dom';
 import { Time } from '../../firebase/services/timeService';
 
 import styles from './FreeTime.module.scss';
-import FormInput from '../../components/FormInput/FormInput';
 
 const FreeTime: FC = () => {
   const appState = useAppSelector(store => store.AppStore);
@@ -82,7 +73,7 @@ const FreeTime: FC = () => {
       const data = await getFreeTime();
       if (data) {
         const filteredData = data.filter(item => Object.keys(item.timeList).length > 0)
-          .sort((a, b) => Number(a.date.full) - Number(b.date.full))
+          .sort((a, b) => Number(a.date.full) - Number(b.date.full));
         setFreeTimeList(filteredData)
       }
     } catch (e) {
