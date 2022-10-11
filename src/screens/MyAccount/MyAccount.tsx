@@ -18,7 +18,7 @@ import FormInput from '../../components/FormInput/FormInput';
 import { PhoneIcon } from '@chakra-ui/icons';
 import { setLoading } from '../../store';
 import useAuth from '../../firebase/controllers/userController';
-import { IHistoryItem } from '../../interfaces';
+import { IHistoryItem, IUser } from '../../interfaces';
 
 const MyAccount: FC = () => {
   const appState = useAppSelector(store => store.AppStore);
@@ -32,16 +32,10 @@ const MyAccount: FC = () => {
   const [editModalPlaceholder, setEditModalPlaceholder] = useState('');
   const [history, setHistory] = useState<IHistoryItem[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      await getUser();
-    })();
-  }, []);
-
-  async function getUser() {
+  const getUser = async () => {
     try {
       reduxDispatch(setLoading(true));
-      const user = await getCurrentUser();
+      await getCurrentUser();
       setHistory(Object.values(appState.currentUserInfo.history));
     } catch (e) {
       console.log(e);
@@ -49,6 +43,12 @@ const MyAccount: FC = () => {
       reduxDispatch(setLoading(false));
     }
   }
+
+  useEffect(() => {
+    (async () => {
+      await getUser();
+    })();
+  }, []);
 
   const saveEditProp = async () => {
     try {
@@ -74,7 +74,7 @@ const MyAccount: FC = () => {
     } finally {
       reduxDispatch(setLoading(false));
     }
-  }
+  };
 
   return (
     <div className={styles.myAccount}>
@@ -188,10 +188,10 @@ const MyAccount: FC = () => {
           </li>
         </ul>
 
-        <div className={styles.keyWrapper}>
+        {/* <div className={styles.keyWrapper}>
           <span className={styles.keyTitle}>Реферальный ключ:</span>
           <span className={styles.key}>{appState.currentUserInfo.privateKey}</span>
-        </div>
+        </div> */}
 
         <div className={styles.history}>
           <span className={styles.historyTitle}>
@@ -212,7 +212,7 @@ const MyAccount: FC = () => {
           </ul>
         </div>
 
-        <div className={styles.history}>
+        {/* <div className={styles.history}>
           <span className={styles.historyTitle}>
             <span>Рефералы</span>
             <span>({appState.currentUserInfo.refferals.length})</span>
@@ -227,7 +227,7 @@ const MyAccount: FC = () => {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
       </Container>
 
       <ModalConteiner

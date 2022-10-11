@@ -178,7 +178,6 @@ const DayScreen: FC = () => {
             value={'отмена'}
             handleClick={() => setTimeForm(false)} />
         </div>
-
       </ModalConteiner>
 
       {!hasFree &&
