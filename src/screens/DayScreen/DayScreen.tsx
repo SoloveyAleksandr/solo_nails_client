@@ -189,13 +189,13 @@ const DayScreen: FC = () => {
         </div>
       </ModalConteiner>
 
-      {!hasFree &&
+      {/* {!hasFree &&
         <div className={styles.plusBtnWrapper}>
           <button className={styles.plusBtn}>
             попросить запись
           </button>
         </div>
-      }
+      } */}
 
     </div >
   );
