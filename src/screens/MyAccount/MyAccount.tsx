@@ -16,14 +16,19 @@ import DefaultBtn from '../../components/DefaultBtn/DefaultBtn';
 import ModalConteiner from '../../components/ModalContainer/ModalContainer';
 import FormInput from '../../components/FormInput/FormInput';
 import { PhoneIcon } from '@chakra-ui/icons';
-import { setLoading } from '../../store';
+import { setCurrentUserInfo, setLoading } from '../../store';
 import useAuth from '../../firebase/controllers/userController';
-import { IHistoryItem } from '../../interfaces';
+import { IHistoryItem, IUser } from '../../interfaces';
 
 const MyAccount: FC = () => {
   const appState = useAppSelector(store => store.AppStore);
   const reduxDispatch = useAppDispatch();
-  const { setName, setInst, getCurrentUser } = useAuth();
+  const {
+    setName,
+    setInst,
+    getCurrentUser,
+    getUserInfo,
+  } = useAuth();
   const toast = useToast();
 
   const [editModal, setEditModal] = useState(false);
@@ -35,8 +40,11 @@ const MyAccount: FC = () => {
   const getUser = async () => {
     try {
       reduxDispatch(setLoading(true));
-      const user = await getCurrentUser();
-      setHistory(Object.values(appState.currentUserInfo.history));
+      const user = await getUserInfo(appState.selectedUserUID);
+      if (user) {
+        reduxDispatch(setCurrentUserInfo(user));
+        setHistory(Object.values(user.history));
+      }
     } catch (e) {
       console.log(e);
     } finally {
@@ -58,9 +66,12 @@ const MyAccount: FC = () => {
       if (type === 'имя') {
         await setName(uid, editModalValue);
       } else if (type === 'instagram') {
-        await setInst(uid, editModalValue);
+        const URL_TEMPLATE = 'https://instagram.com/';
+        editModalValue.includes(URL_TEMPLATE) ?
+          await setInst(uid, editModalValue) :
+          await setInst(uid, `${URL_TEMPLATE}${editModalValue}`)
       }
-      await getCurrentUser();
+      await getUser();
       setEditModal(false);
       toast({
         title: 'Данные успешно изменены',
@@ -74,7 +85,7 @@ const MyAccount: FC = () => {
     } finally {
       reduxDispatch(setLoading(false));
     }
-  }
+  };
 
   return (
     <div className={styles.myAccount}>
@@ -188,10 +199,10 @@ const MyAccount: FC = () => {
           </li>
         </ul>
 
-        <div className={styles.keyWrapper}>
+        {/* <div className={styles.keyWrapper}>
           <span className={styles.keyTitle}>Реферальный ключ:</span>
           <span className={styles.key}>{appState.currentUserInfo.privateKey}</span>
-        </div>
+        </div> */}
 
         <div className={styles.history}>
           <span className={styles.historyTitle}>
@@ -200,17 +211,29 @@ const MyAccount: FC = () => {
           </span>
           <ul className={styles.historyList}>
             {history.map(item => (
-              <li className={styles.historyItem}>
+              <li
+                key={item.id}
+                className={styles.historyItem}>
                 <InfoContainer>
-                  <span>{item.time.date.formate}</span>
-                  <span>{item.status}</span>
+                  <span>{item.time.date.formate} {item.time.time}</span>
+                  <span>
+                    {
+                      item.status === 'await' && 'вы записаны'
+                    }
+                    {
+                      item.status === 'success' && 'завершено'
+                    }
+                    {
+                      item.status === 'canceled' && 'отменено'
+                    }
+                  </span>
                 </InfoContainer>
               </li>
             ))}
           </ul>
         </div>
 
-        <div className={styles.history}>
+        {/* <div className={styles.history}>
           <span className={styles.historyTitle}>
             <span>Рефералы</span>
             <span>({appState.currentUserInfo.refferals.length})</span>
@@ -225,7 +248,7 @@ const MyAccount: FC = () => {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
       </Container>
 
       <ModalConteiner
@@ -235,7 +258,9 @@ const MyAccount: FC = () => {
           placeholder={editModalPlaceholder}
           title={editModalTitle}
           value={editModalValue}
-          onChange={(e) => setEditModalValue(e.target.value)} />
+          onChange={(e) => setEditModalValue(e.target.value)}
+          info={editModalTitle !== 'instagram' ? undefined :
+            'Вставьте полную ссылку на свою страницу или запишите имя аккаунта. После сохранения, обязательно, проверьте свою ссылку'} />
         <div className={styles.editModalBtn}>
           <DefaultBtn
             handleClick={saveEditProp}

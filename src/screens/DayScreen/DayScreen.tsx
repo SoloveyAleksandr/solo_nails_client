@@ -57,6 +57,7 @@ const DayScreen: FC = () => {
   const [timeForm, setTimeForm] = useState(false);
 
   const [hasFree, setHasFree] = useState(false);
+  const [hasReserve, setHasReserve] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -70,7 +71,9 @@ const DayScreen: FC = () => {
 
   useEffect(() => {
     const result = timeList.filter((el) => !el.isReserved);
+    const reserves = timeList.filter((el) => el.client.uid === appState.currentUserInfo.uid);
     setHasFree(result.length > 0);
+    setHasReserve(reserves.length > 0);
   }, [timeList]);
 
   const reserveTime = (time: ITimeItem) => {
@@ -89,7 +92,8 @@ const DayScreen: FC = () => {
         client: {
           uid: appState.currentUserInfo.uid,
           confirmed: false,
-        }
+        },
+        isReserved: true,
       });
       await bookATime({ ...newTimeItem });
       await getDay();
@@ -122,15 +126,21 @@ const DayScreen: FC = () => {
             timeList.map(item => (
               <li
                 key={item.id}
-                className={
-                  (item.client.uid || item.isOffline.status) ?
-                    `${styles.timeItem} ${styles.reserved}` : styles.timeItem}>
+                // className={
+                //   (item.client.uid || item.isOffline.status) ?
+                //     `${styles.timeItem} ${styles.reserved} ${item.client.uid === appState.currentUserInfo.uid && styles.userReserve}` : styles.timeItem}
+                className={`
+                  ${styles.timeItem}
+                  ${item.client.uid !== appState.currentUserInfo.uid && hasReserve ? styles.close : ''}
+                  ${item.client.uid || item.isOffline.status ? `${styles.timeItem} ${styles.reserved} ${item.client.uid === appState.currentUserInfo.uid && styles.userReserve}` : ''}
+                `}
+              >
                 <span className={styles.timeItemTime}>
                   {item.time}
                 </span>
                 {
                   item.client.uid === appState.currentUserInfo.uid &&
-                  <span>
+                  <span className={styles.timeItemStatus}>
                     {
                       item.client.confirmed ?
                         <>вы записаны</>
@@ -177,16 +187,15 @@ const DayScreen: FC = () => {
             value={'отмена'}
             handleClick={() => setTimeForm(false)} />
         </div>
-
       </ModalConteiner>
 
-      {!hasFree &&
+      {/* {!hasFree &&
         <div className={styles.plusBtnWrapper}>
           <button className={styles.plusBtn}>
             попросить запись
           </button>
         </div>
-      }
+      } */}
 
     </div >
   );

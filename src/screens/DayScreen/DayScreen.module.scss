@@ -69,14 +69,27 @@
     justify-content: space-between;
     background-color: $white20;
 
+    &.close {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
     &.reserved {
       opacity: 0.5;
       pointer-events: none;
     }
 
+    &.userReserve {
+      opacity: 1;
+    }
+
     &Time {
       font-size: 20px;
       font-weight: 700;
+      color: $white;
+    }
+
+    &Status {
       color: $white;
     }
   }

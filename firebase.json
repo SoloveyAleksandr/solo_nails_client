@@ -16,10 +16,6 @@
         "destination": "/index.html"
       },
       {
-        "source": "/reserved",
-        "destination": "/index.html"
-      },
-      {
         "source": "/free-time",
         "destination": "/index.html"
       },

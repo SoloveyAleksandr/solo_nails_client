@@ -1,8 +1,24 @@
-.menuList {
-    padding: 30px 0 0 30px;
-    list-style: none;
-    .menuItem + .menuItem {
+.menu {
+    &Link {
+        display: flex;
+        align-items: center;
+    }
+    &Icon {
+        margin-left: 10px;
+    }
+    &List {
+        padding: 15px 0 0 30px;
+        list-style: none;
+    }
+
+    &Item {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
         margin-top: 15px;
+        &.signOut {
+            margin-top: 60px;
+        }
     }
 }
 
