@@ -24,12 +24,15 @@ import { NavLink } from "react-router-dom";
 
 import styles from './DayScreen.module.scss';
 import { ITimeItem } from "../../interfaces";
+import { useTelegram } from "../../notification";
 
 const DayScreen: FC = () => {
   const {
     bookATime
   } = useTime();
   const { getDay } = useDay();
+  const { sendNotification } = useTelegram();
+
   const toast = useToast();
   const appState = useAppSelector(store => store.AppStore);
   const reduxDispatch = useAppDispatch();
@@ -97,6 +100,7 @@ const DayScreen: FC = () => {
       });
       await bookATime({ ...newTimeItem });
       await getDay();
+      await sendNotification({ ...newTimeItem });
     } catch (e) {
       console.log(e);
     } finally {
