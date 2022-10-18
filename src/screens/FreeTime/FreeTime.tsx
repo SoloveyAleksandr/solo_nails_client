@@ -27,6 +27,7 @@ import { NavLink } from 'react-router-dom';
 import { Time } from '../../firebase/services/timeService';
 
 import styles from './FreeTime.module.scss';
+import { sortByTime } from '../../firebase/services/dayService';
 
 const FreeTime: FC = () => {
   const appState = useAppSelector(store => store.AppStore);
@@ -38,28 +39,28 @@ const FreeTime: FC = () => {
   } = useTime();
 
   const [freeTimeList, setFreeTimeList] = useState<IReserveItem[]>([]);
-  const [timeItem, setTimeItem] = useState<ITimeItem>({
-    id: '',
-    isReserved: false,
-    time: '',
-    date: {
-      full: 0,
-      formate: '',
-    },
-    client: {
-      uid: '',
-      confirmed: false,
-    },
-    isOffline: {
-      status: false,
-      name: '',
-      instagram: '',
-      phoneNumber: '',
-      comment: '',
-    }
-  });
+  // const [timeItem, setTimeItem] = useState<ITimeItem>({
+  //   id: '',
+  //   isReserved: false,
+  //   time: '',
+  //   date: {
+  //     full: 0,
+  //     formate: '',
+  //   },
+  //   client: {
+  //     uid: '',
+  //     confirmed: false,
+  //   },
+  //   isOffline: {
+  //     status: false,
+  //     name: '',
+  //     instagram: '',
+  //     phoneNumber: '',
+  //     comment: '',
+  //   }
+  // });
 
-  const [timeForm, setTimeForm] = useState(false);
+  // const [timeForm, setTimeForm] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -74,7 +75,7 @@ const FreeTime: FC = () => {
       if (data) {
         const filteredData = data.filter(item => Object.keys(item.timeList).length > 0)
           .sort((a, b) => Number(a.date.full) - Number(b.date.full));
-        setFreeTimeList(filteredData)
+        setFreeTimeList(filteredData);
       }
     } catch (e) {
       console.log(e);
@@ -83,33 +84,33 @@ const FreeTime: FC = () => {
     }
   }
 
-  const reserveTime = (time: ITimeItem) => {
-    setTimeItem(time);
-    setTimeForm(true);
-  };
+  // const reserveTime = (time: ITimeItem) => {
+  //   setTimeItem(time);
+  //   setTimeForm(true);
+  // };
 
-  const setReserve = async () => {
-    try {
-      setTimeForm(false);
-      reduxDispatch(setLoading(true));
-      const newTimeItem = new Time({
-        id: timeItem.id,
-        time: timeItem.time,
-        date: timeItem.date,
-        client: {
-          uid: appState.currentUserInfo.uid,
-          confirmed: false,
-        },
-        isReserved: true,
-      });
-      await bookATime({ ...newTimeItem });
-      await getFreeTimeList();
-    } catch (e) {
-      console.log(e);
-    } finally {
-      reduxDispatch(setLoading(false));
-    }
-  };
+  // const setReserve = async () => {
+  //   try {
+  //     setTimeForm(false);
+  //     reduxDispatch(setLoading(true));
+  //     const newTimeItem = new Time({
+  //       id: timeItem.id,
+  //       time: timeItem.time,
+  //       date: timeItem.date,
+  //       client: {
+  //         uid: appState.currentUserInfo.uid,
+  //         confirmed: false,
+  //       },
+  //       isReserved: true,
+  //     });
+  //     await bookATime({ ...newTimeItem });
+  //     await getFreeTimeList();
+  //   } catch (e) {
+  //     console.log(e);
+  //   } finally {
+  //     reduxDispatch(setLoading(false));
+  //   }
+  // };
 
   return (
     <div className={styles.reserved}>
@@ -150,13 +151,13 @@ const FreeTime: FC = () => {
                 as={'ul'}
                 className={styles.timeList} >
                 {
-                  Object.values(day.timeList).sort((a, b) => Number(a.date.full) - Number(b.date.full)).map(item => (
+                  Object.values(day.timeList).sort((a, b) => sortByTime(a, b)).map(item => (
                     <li
                       key={item.id}
                       className={styles.timeItem}>
                       <InfoContainer>
                         <span className={styles.timeItemTitle}>{item.time}</span>
-                        <ul className={styles.btnList}>
+                        {/* <ul className={styles.btnList}>
                           <li className={styles.btnItem}>
                             <IconButton
                               onClick={() => reserveTime(item)}
@@ -167,7 +168,7 @@ const FreeTime: FC = () => {
                               color="#fff"
                               icon={<CheckIcon />} />
                           </li>
-                        </ul>
+                        </ul> */}
                       </InfoContainer>
                     </li>
                   ))
@@ -179,7 +180,7 @@ const FreeTime: FC = () => {
 
       </Container>
 
-      <ModalConteiner
+      {/* <ModalConteiner
         isOpen={timeForm}
         onClose={() => setTimeForm(false)}>
 
@@ -196,7 +197,7 @@ const FreeTime: FC = () => {
             value={'отмена'}
             handleClick={() => setTimeForm(false)} />
         </div>
-      </ModalConteiner>
+      </ModalConteiner> */}
 
     </div>
   );
