@@ -40,32 +40,6 @@ export default function useReserve() {
     }
   };
 
-  // const getAllReserves = async () => {
-  //   try {
-  //     const arr: ITimeItem[] = [];
-  //     const reserves = await getDocs(reserveRef.withConverter(timeConverter));
-  //     reserves.forEach(item => {
-  //       arr.push(item.data());
-  //     });
-  //     return arr.sort(sortReserves);
-  //   } catch (e) {
-  //     errorHandler(e);
-  //   }
-  // };
-
-  // const setReserve = async (id: string, comment: string) => {
-  //   try {
-  //     const reserveItemRef = doc(reserveRef, id);
-  //     await updateDoc(reserveItemRef, {
-  //       [`client.uid`]: appState.currentUser.uid,
-  //       [`client.comment`]: comment,
-  //       [`isReserved`]: true,
-  //     });
-  //   } catch (e) {
-  //     errorHandler(e);
-  //   }
-  // }
-
   return {
     addReserve,
     deleteReserve,

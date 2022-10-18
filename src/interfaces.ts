@@ -92,3 +92,10 @@ export interface IService {
     value: string,
   }[],
 }
+
+export interface IUserReserve {
+  id: string;
+  uid: string;
+  time: ITimeItem;
+  isConfirmed: boolean;
+}
