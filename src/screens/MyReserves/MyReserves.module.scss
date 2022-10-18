@@ -1,0 +1,23 @@
+@import "../../var";
+
+.list {
+  list-style: none;
+  padding-bottom: 50px;
+
+  &Item {
+    padding-top: 15px;
+  }
+
+  &Info {
+    color: $white;
+  }
+
+  &Box {
+    display: flex;
+    align-items: center;
+  }
+
+  &Link {
+    margin-left: 25px;
+  }
+}

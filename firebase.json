@@ -16,6 +16,10 @@
         "destination": "/index.html"
       },
       {
+        "source": "/my-reserves",
+        "destination": "/index.html"
+      },
+      {
         "source": "/free-time",
         "destination": "/index.html"
       },

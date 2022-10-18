@@ -177,7 +177,7 @@ export default function useTime() {
     } catch (e) {
       errorHandler(e);
     }
-  }
+  };
 
   return {
     setTimeToDay,
