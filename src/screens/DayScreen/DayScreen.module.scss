@@ -44,6 +44,16 @@
     align-items: center;
     justify-content: space-between;
   }
+
+  &TitleWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    .formTitle {
+      margin: 0;
+    }
+  }
 }
 
 .time {
@@ -135,5 +145,81 @@
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 15px;
+  }
+}
+
+.service {
+  &Item {
+    width: 100%;
+  }
+  &List {
+    display: flex;
+    flex-direction: column;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+}
+
+.price {
+  &List {
+    list-style: none;
+  }
+
+  &Item {
+    width: 100%;
+    border: 1px solid $black50;
+    border-radius: 8px;
+    color: $black;
+    position: relative;
+    box-shadow: 0 0 10px $black50;
+    margin-top: 15px;
+  }
+
+  &Header {
+    height: 40px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $black50;
+  }
+
+  &Title {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &Count {
+    font-family: "Teko";
+    font-size: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0 10px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    border-top: 1px solid $black50;
+  }
+
+  &Value {
+    font-size: 10px;
+    transform: translateY(5px);
+  }
+}
+
+.service {
+  margin-bottom: 25px;
+  &List {
+    list-style: decimal;
+    padding: 10px 10px 10px 30px;
+  }
+
+  &Item {
+    position: relative;
+    font-size: 18px;
+    font-weight: 600;
+    color: $black80;
   }
 }

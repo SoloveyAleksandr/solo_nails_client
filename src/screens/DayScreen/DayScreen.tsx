@@ -7,10 +7,13 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   IconButton,
   Input,
+  Radio,
+  RadioGroup,
+  Select,
   Switch,
   useToast,
 } from '@chakra-ui/react';
-import { AddIcon, CheckIcon, CloseIcon, PhoneIcon } from '@chakra-ui/icons';
+import { AddIcon, CheckIcon, CloseIcon, MinusIcon, PhoneIcon } from '@chakra-ui/icons';
 import { setLoading } from "../../store";
 import useDay from "../../firebase/controllers/dayController";
 import ModalConteiner from "../../components/ModalContainer/ModalContainer";
@@ -23,13 +26,16 @@ import Container from "../../components/Container/Container";
 import { NavLink } from "react-router-dom";
 
 import styles from './DayScreen.module.scss';
-import { ITimeItem } from "../../interfaces";
+import { IService, ITimeItem } from "../../interfaces";
+import { useService } from "../../firebase/controllers/serviceController";
+import InfoContainer from "../../components/InfoContainer/InfoContainer";
 
 const DayScreen: FC = () => {
   const {
     bookATime
   } = useTime();
   const { getDay } = useDay();
+  const { getServices } = useService();
   const toast = useToast();
   const appState = useAppSelector(store => store.AppStore);
   const reduxDispatch = useAppDispatch();
@@ -58,11 +64,14 @@ const DayScreen: FC = () => {
 
   const [hasFree, setHasFree] = useState(false);
   const [hasReserve, setHasReserve] = useState(false);
+  const [services, setServices] = useState<IService[]>([]);
+  const [selectedService, setSelectedService] = useState<string>('service');
 
   useEffect(() => {
     (async () => {
       reduxDispatch(setLoading(true));
       await getDay();
+      await getServicesList()
       reduxDispatch(setLoading(false));
     })();
   }, []);
@@ -103,6 +112,20 @@ const DayScreen: FC = () => {
       reduxDispatch(setLoading(false));
     }
   };
+
+  const getServicesList = async () => {
+    try {
+      const list = await getServices();
+      setServices(Object.values(list).sort((a, b) => Number(b.price) - Number(a.price)));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const closeTimeForm = () => {
+    setTimeForm(false);
+    setSelectedService('service');
+  }
 
   return (
     <div className={styles.day}>
@@ -172,11 +195,99 @@ const DayScreen: FC = () => {
 
       <ModalConteiner
         isOpen={timeForm}
-        onClose={() => setTimeForm(false)}>
+        onClose={closeTimeForm}>
 
-        <span className={styles.formTitle}>
-          Забронировать запись на {`${timeItem.date.formate} в ${timeItem.time}`}?
-        </span>
+        <div className={styles.formTitleWrapper}>
+          <span className={styles.formTitle}>
+            выберете нужные услуги
+          </span>
+          <NavLink to={'/services'}>
+            <DefaultBtn
+              dark
+              value="подробнее" />
+          </NavLink>
+        </div>
+        <div className={styles.service}>
+          {/* <Select
+            onChange={(e) => setSelectedService(e.target.value)}
+            value={selectedService}>
+            <option
+              value={'service'}
+              disabled>
+              услуги
+            </option>
+            {
+              services.map(item => (
+                <option
+                  key={item.id}
+                  value={item.title}>
+                  {item.title}
+                </option>
+              ))
+            }
+          </Select> */}
+
+          <RadioGroup className={styles.serviceList}>
+            {
+              services.map(item => (
+                <Radio
+                  key={item.id}
+                  value={item.id}
+                  className={styles.serviceItem}>
+                  <div className={styles.priceItem}>
+                    <div className={styles.priceHeader}>
+                      <h3 className={styles.priceTitle}>{item.title}</h3>
+                    </div>
+                    {
+                      item.servicesList.length > 0 &&
+                      <ul className={styles.serviceList}>
+                        {
+                          item.servicesList.map(el => (
+                            <li key={el.id}
+                              className={styles.serviceItem}>
+                              {el.value}
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    }
+                    <span className={styles.priceCount}>
+                      {item.price}
+                      <span className={styles.priceValue}>руб.</span>
+                    </span>
+                  </div>
+                </Radio>
+              ))
+            }
+            <Radio value='3'>Radio 3</Radio>
+          </RadioGroup>
+
+          <InfoContainer>
+            <span>ногтей нуждающихся в ремонте</span>
+            <div>
+              <IconButton
+                onClick={() => { }}
+                variant='ghost'
+                colorScheme='blackAlpha'
+                aria-label='btn'
+                size={'xs'}
+                color="#000"
+                icon={<AddIcon />}
+              />
+              <span>0</span>
+              <IconButton
+                onClick={() => { }}
+                variant='ghost'
+                colorScheme='blackAlpha'
+                aria-label='btn'
+                size={'xs'}
+                color="#000"
+                icon={<MinusIcon />}
+              />
+            </div>
+          </InfoContainer>
+
+        </div>
         <div className={styles.formBtns}>
           <DefaultBtn
             dark={true}
@@ -185,7 +296,7 @@ const DayScreen: FC = () => {
           <DefaultBtn
             dark={true}
             value={'отмена'}
-            handleClick={() => setTimeForm(false)} />
+            handleClick={closeTimeForm} />
         </div>
       </ModalConteiner>
 
