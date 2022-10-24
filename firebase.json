@@ -8,15 +8,15 @@
     ],
     "rewrites": [
       {
-        "source": "/*",
-        "destination": "/index.html"
-      },
-      {
         "source": "/day",
         "destination": "/index.html"
       },
       {
         "source": "/my-account",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/my-reserves",
         "destination": "/index.html"
       },
       {
@@ -29,6 +29,10 @@
       },
       {
         "source": "/calendar",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/*",
         "destination": "/index.html"
       }
     ]

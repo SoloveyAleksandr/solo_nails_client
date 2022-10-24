@@ -27,6 +27,8 @@ import { NavLink } from "react-router-dom";
 
 import styles from './DayScreen.module.scss';
 import { IService, ITimeItem } from "../../interfaces";
+import { useTelegram } from "../../notification";
+import useAuth from "../../firebase/controllers/userController";
 import { useService } from "../../firebase/controllers/serviceController";
 import InfoContainer from "../../components/InfoContainer/InfoContainer";
 
@@ -35,7 +37,10 @@ const DayScreen: FC = () => {
     bookATime
   } = useTime();
   const { getDay } = useDay();
+  const { addUserReserve } = useAuth();
   const { getServices } = useService();
+  const { sendNotification } = useTelegram();
+
   const toast = useToast();
   const appState = useAppSelector(store => store.AppStore);
   const reduxDispatch = useAppDispatch();
@@ -107,6 +112,8 @@ const DayScreen: FC = () => {
       });
       await bookATime({ ...newTimeItem });
       await getDay();
+      await addUserReserve({ ...newTimeItem });
+      await sendNotification({ ...newTimeItem });
       toast({
         title: 'Запись отправлена в обработку, ожидайте подтверждения',
         status: 'success',

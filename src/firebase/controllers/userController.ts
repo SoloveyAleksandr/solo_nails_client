@@ -1,10 +1,10 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User as FBUser } from "firebase/auth";
-import { collection, deleteField, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
-import { IHistoryItem, ITimeItem } from "../../interfaces";
+import { collection, deleteDoc, deleteField, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { IHistoryItem, ITimeItem, IUserReserve } from "../../interfaces";
 import { setCurrentUserInfo } from "../../store";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { app, authentification, DB } from "../firebase";
-import { History, User, userConverter } from "../services/userService";
+import { History, User, userConverter, UserReserve } from "../services/userService";
 import useReserve from "./reserveController";
 
 export default function useAuth() {
@@ -14,6 +14,7 @@ export default function useAuth() {
 
     const userRef = collection(DB, "user");
     const dayRef = collection(DB, 'day');
+    const userReserveRef = collection(DB, 'userReserve');
 
     const { deleteReserve } = useReserve();
 
@@ -117,21 +118,58 @@ export default function useAuth() {
         }
     };
 
-    const setHictoryStatus = async (uid: string, itemID: string, status: 'canceled' | 'success' | 'await') => {
+    const addUserReserve = async (timeItem: ITimeItem) => {
         try {
-            await updateDoc(doc(userRef, uid), {
-                ['history.' + [itemID] + '.status']: status
-            });
+            const newReserve = new UserReserve(timeItem);
+            await setDoc(doc(userReserveRef, newReserve.id), { ...newReserve });
         } catch (e) {
             errorHandler(e);
         }
     };
 
+    const getAllUserReserves = async (uid: string) => {
+        try {
+            const q = query(userReserveRef, where("uid", "==", uid));
+            const snapData = await getDocs(q);
+            const list: IUserReserve[] = [];
+            snapData.forEach(data => list.push(data.data() as IUserReserve));
+            return list;
+        } catch (e) {
+            errorHandler(e);
+        }
+    };
+
+    const setUserReserve = async (timeItem: ITimeItem, status: boolean) => {
+        try {
+            const newReserve = new UserReserve(timeItem, status);
+            await updateDoc(doc(userReserveRef, newReserve.id), { ...newReserve });
+        } catch (e) {
+            errorHandler(e);
+        }
+    };
+
+    const removeUserReserve = async (timeItem: ITimeItem) => {
+        try {
+            await deleteDoc(doc(userReserveRef, timeItem.id));
+        } catch (e) {
+            errorHandler(e);
+        }
+    };
+
+
+
     return {
         getUserInfo,
         getCurrentUser,
+
         userSignOut,
+
         setName,
         setInst,
+
+        addUserReserve,
+        getAllUserReserves,
+        setUserReserve,
+        removeUserReserve,
     }
 }

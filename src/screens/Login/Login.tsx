@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { useAppDispatch } from "../../store/hooks";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { ConfirmationResult, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import DefaultBtn from "../../components/DefaultBtn/DefaultBtn";
 import { Link } from "react-router-dom";
 import { authentification } from "../../firebase/firebase";
@@ -50,14 +50,16 @@ const Login: FC = () => {
     return '';
   };
 
-  const generateRecaptcha = () => {
-    (window as any).recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-      'size': 'invisible',
-      'callback': (response: any) => {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-      }
-    }, authentification);
+  interface Castom extends Window {
+    recaptchaVerifier?: RecaptchaVerifier,
+    confirmationResult?: ConfirmationResult,
   }
+
+  const createVerifier = () => {
+    (window as Castom).recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+      'size': 'invisible',
+    }, authentification);
+  };
 
   const sendForm = async () => {
     try {
@@ -71,13 +73,15 @@ const Login: FC = () => {
         });
         return;
       }
+      createVerifier();
       reduxDispatch(setLoading(true));
       setAwaitOTP(true);
-      generateRecaptcha();
-      const appVerifier = (window as any).recaptchaVerifier;
+      const appVerifier = (window as Castom).recaptchaVerifier;
       const phoneNumber = `+375${phone}`;
-      const confirmationResult = await signInWithPhoneNumber(authentification, phoneNumber, appVerifier);
-      (window as any).confirmationResult = confirmationResult;
+      if (appVerifier) {
+        const confirmationResult = await signInWithPhoneNumber(authentification, phoneNumber, appVerifier);
+        (window as Castom).confirmationResult = confirmationResult;
+      }
       toast({
         title: `Код был отправлен на ваш номер: +375 ${phoneFormate}`,
         status: 'success',
@@ -96,11 +100,13 @@ const Login: FC = () => {
   };
 
   const sendOTP = async () => {
+    const confirmationResult = (window as Castom).confirmationResult;
+    const recaptchaVerifier = (window as Castom).recaptchaVerifier;
     try {
-      if (OTP.length === 6) {
+      if (OTP.length === 6 && confirmationResult && recaptchaVerifier) {
         reduxDispatch(setLoading(true));
-        const confirmationResult = (window as any).confirmationResult;
-        const result = await confirmationResult.confirm(OTP)
+        const result = await confirmationResult.confirm(OTP);
+        recaptchaVerifier.clear();
         return;
       } else {
         toast({
@@ -113,9 +119,7 @@ const Login: FC = () => {
         return;
       }
     } catch (e) {
-      console.log(e);
-      setAwaitOTP(false);
-      authError(e);
+      (window as Window).location.reload();
     } finally {
       reduxDispatch(setLoading(false));
     }
@@ -130,10 +134,11 @@ const Login: FC = () => {
 
       <form
         className={styles.form}
-        onSubmit={e => {
+        onSubmit={(e) => {
           e.preventDefault();
-          awaitOTP && sendOTP();
-          !awaitOTP && sendForm();
+          awaitOTP ?
+            sendOTP() :
+            sendForm();
         }}>
         <ul className={styles.formList}>
           {

@@ -85,6 +85,13 @@ const Calendar: FC = () => {
           <li
             className={styles.menuItem}>
             <NavLink
+              to={'/my-reserves'}>
+              мои записи
+            </NavLink>
+          </li>
+          <li
+            className={styles.menuItem}>
+            <NavLink
               onClick={() => reduxDispatch(setSelectedUserUID(appState.currentUserInfo.uid))}
               to={'/my-account'}>
               мой аккаунт

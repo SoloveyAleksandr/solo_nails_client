@@ -66,7 +66,10 @@ const MyAccount: FC = () => {
       if (type === 'имя') {
         await setName(uid, editModalValue);
       } else if (type === 'instagram') {
-        await setInst(uid, editModalValue);
+        const URL_TEMPLATE = 'https://instagram.com/';
+        editModalValue.includes(URL_TEMPLATE) ?
+          await setInst(uid, editModalValue) :
+          await setInst(uid, `${URL_TEMPLATE}${editModalValue}`)
       }
       await getUser();
       setEditModal(false);
@@ -255,7 +258,9 @@ const MyAccount: FC = () => {
           placeholder={editModalPlaceholder}
           title={editModalTitle}
           value={editModalValue}
-          onChange={(e) => setEditModalValue(e.target.value)} />
+          onChange={(e) => setEditModalValue(e.target.value)}
+          info={editModalTitle !== 'instagram' ? undefined :
+            'Вставьте полную ссылку на свою страницу или запишите имя аккаунта. После сохранения, обязательно, проверьте свою ссылку'} />
         <div className={styles.editModalBtn}>
           <DefaultBtn
             handleClick={saveEditProp}
