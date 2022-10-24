@@ -6,10 +6,6 @@ import InfoContainer from '../../components/InfoContainer/InfoContainer';
 import Logo from '../../components/Logo/Logo';
 import ScreenTitle from '../../components/ScreenTitle/ScreenTitle';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import {
-  Icon,
-  useToast,
-} from '@chakra-ui/react';
 import { setLoading, setSelectedDate } from '../../store';
 import { IUserReserve } from '../../interfaces';
 import { sortByDate } from '../../firebase/services/dayService';
@@ -22,7 +18,6 @@ import { ExternalLinkIcon } from '@chakra-ui/icons';
 const MyReserves: FC = () => {
   const appState = useAppSelector(store => store.AppStore);
   const reduxDispatch = useAppDispatch();
-  const toast = useToast();
   const { getAllUserReserves } = useAuth();
 
   const [reserveList, setReserveList] = useState<IUserReserve[]>([]);

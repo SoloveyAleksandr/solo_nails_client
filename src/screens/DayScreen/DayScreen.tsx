@@ -6,19 +6,14 @@ import ScreenTitle from "../../components/ScreenTitle/ScreenTitle";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   IconButton,
-  Input,
-  Radio,
-  RadioGroup,
   Select,
-  Switch,
   useToast,
 } from '@chakra-ui/react';
-import { AddIcon, CheckIcon, CloseIcon, MinusIcon, PhoneIcon } from '@chakra-ui/icons';
+import { CheckIcon } from '@chakra-ui/icons';
 import { setLoading } from "../../store";
 import useDay from "../../firebase/controllers/dayController";
 import ModalConteiner from "../../components/ModalContainer/ModalContainer";
 import DefaultBtn from "../../components/DefaultBtn/DefaultBtn";
-import FormInput from "../../components/FormInput/FormInput";
 import useTime from "../../firebase/controllers/timeController";
 import { Time } from "../../firebase/services/timeService";
 import { sortByTime } from "../../firebase/services/dayService";
@@ -30,7 +25,6 @@ import { IService, ITimeItem } from "../../interfaces";
 import { useTelegram } from "../../notification";
 import useAuth from "../../firebase/controllers/userController";
 import { useService } from "../../firebase/controllers/serviceController";
-import InfoContainer from "../../components/InfoContainer/InfoContainer";
 
 const DayScreen: FC = () => {
   const {
@@ -67,7 +61,7 @@ const DayScreen: FC = () => {
   });
   const [timeForm, setTimeForm] = useState(false);
 
-  const [hasFree, setHasFree] = useState(false);
+  // const [hasFree, setHasFree] = useState(false);
   const [hasReserve, setHasReserve] = useState(false);
   const [services, setServices] = useState<IService[]>([]);
   const [selectedService, setSelectedService] = useState<string>('');
@@ -84,9 +78,9 @@ const DayScreen: FC = () => {
   const timeList = Object.values(appState.selectedDay.timeList).sort((a, b) => sortByTime(a, b));
 
   useEffect(() => {
-    const result = timeList.filter((el) => !el.isReserved);
+    // const result = timeList.filter((el) => !el.isReserved);
     const reserves = timeList.filter((el) => el.client.uid === appState.currentUserInfo.uid);
-    setHasFree(result.length > 0);
+    // setHasFree(result.length > 0);
     setHasReserve(reserves.length > 0);
   }, [timeList]);
 
