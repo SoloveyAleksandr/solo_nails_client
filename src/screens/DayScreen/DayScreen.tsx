@@ -117,6 +117,7 @@ const DayScreen: FC = () => {
     try {
       const list = await getServices();
       setServices(Object.values(list).sort((a, b) => Number(b.price) - Number(a.price)));
+      setSelectedService(services[0].id)
     } catch (e) {
       console.log(e);
     }
@@ -197,97 +198,53 @@ const DayScreen: FC = () => {
         isOpen={timeForm}
         onClose={closeTimeForm}>
 
-        <div className={styles.formTitleWrapper}>
-          <span className={styles.formTitle}>
-            выберете нужные услуги
+        <span className={styles.formTitle}>
+          выберете нужные услуги
+        </span>
+
+        <div className={styles.formLinkContainer}>
+          <span className={styles.formLinkText}>
+            ознакомиться с услугами можно
           </span>
-          <NavLink to={'/services'}>
-            <DefaultBtn
-              dark
-              value="подробнее" />
+          <NavLink
+            to={'/services'}
+            className={styles.formLink}>
+            тут
           </NavLink>
         </div>
+
         <div className={styles.service}>
-          {/* <Select
+          <Select
             onChange={(e) => setSelectedService(e.target.value)}
-            value={selectedService}>
-            <option
-              value={'service'}
-              disabled>
-              услуги
-            </option>
+            value={selectedService}
+            className={styles.serviceSelect}>
             {
               services.map(item => (
                 <option
                   key={item.id}
-                  value={item.title}>
+                  value={item.id}>
                   {item.title}
                 </option>
               ))
             }
-          </Select> */}
+          </Select>
 
-          <RadioGroup className={styles.serviceList}>
-            {
-              services.map(item => (
-                <Radio
-                  key={item.id}
-                  value={item.id}
-                  className={styles.serviceItem}>
-                  <div className={styles.priceItem}>
-                    <div className={styles.priceHeader}>
-                      <h3 className={styles.priceTitle}>{item.title}</h3>
-                    </div>
-                    {
-                      item.servicesList.length > 0 &&
-                      <ul className={styles.serviceList}>
-                        {
-                          item.servicesList.map(el => (
-                            <li key={el.id}
-                              className={styles.serviceItem}>
-                              {el.value}
-                            </li>
-                          ))
-                        }
-                      </ul>
-                    }
-                    <span className={styles.priceCount}>
-                      {item.price}
-                      <span className={styles.priceValue}>руб.</span>
-                    </span>
-                  </div>
-                </Radio>
-              ))
-            }
-            <Radio value='3'>Radio 3</Radio>
-          </RadioGroup>
-
-          <InfoContainer>
-            <span>ногтей нуждающихся в ремонте</span>
-            <div>
-              <IconButton
-                onClick={() => { }}
-                variant='ghost'
-                colorScheme='blackAlpha'
-                aria-label='btn'
-                size={'xs'}
-                color="#000"
-                icon={<AddIcon />}
-              />
-              <span>0</span>
-              <IconButton
-                onClick={() => { }}
-                variant='ghost'
-                colorScheme='blackAlpha'
-                aria-label='btn'
-                size={'xs'}
-                color="#000"
-                icon={<MinusIcon />}
-              />
-            </div>
-          </InfoContainer>
-
+          <div className={styles.serviceInfo}>
+            <h6 className={styles.serviceTitle}>в услугу входит:</h6>
+            <ul className={styles.serviceList}>
+              {
+                services.find(el => el.id === selectedService)?.servicesList.map(item => (
+                  <li
+                    key={item.id}
+                    className={styles.serviceItem}>
+                    {item.value}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
         </div>
+
         <div className={styles.formBtns}>
           <DefaultBtn
             dark={true}
