@@ -61,7 +61,9 @@ const MyReserves: FC = () => {
         <ul className={styles.list}>
           {
             reserveList.map(item => (
-              <li className={styles.listItem}>
+              <li
+                key={item.id}
+                className={styles.listItem}>
                 <InfoContainer>
                   <span className={styles.listInfo}>
                     {item.time.date.formate}

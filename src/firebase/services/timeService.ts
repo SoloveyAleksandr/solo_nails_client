@@ -12,6 +12,7 @@ export class Time {
   client: {
     uid: string,
     confirmed: boolean,
+    service?: string,
   };
   isOffline: {
     status: boolean,
@@ -33,6 +34,7 @@ export class Time {
       client?: {
         uid: string,
         confirmed: boolean,
+        service?: string,
       },
       isOffline?: {
         status: boolean,

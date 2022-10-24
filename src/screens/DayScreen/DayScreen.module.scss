@@ -44,6 +44,39 @@
     align-items: center;
     justify-content: space-between;
   }
+
+  &TitleWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    .formTitle {
+      margin: 0;
+    }
+  }
+  &Link {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 110%;
+      height: 1px;
+      background-color: $black;
+      bottom: 0;
+    }
+    &Container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      margin-top: -10px;
+    }
+  }
 }
 
 .time {
@@ -135,5 +168,22 @@
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 15px;
+  }
+}
+
+.service {
+  margin-bottom: 25px;
+  &Select {
+    margin-bottom: 15px;
+  }
+  &Title {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  &List {
+    list-style: none;
+    list-style: decimal;
+    padding: 0 0 0 20px;
   }
 }
