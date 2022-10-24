@@ -65,7 +65,7 @@ const DayScreen: FC = () => {
   const [hasFree, setHasFree] = useState(false);
   const [hasReserve, setHasReserve] = useState(false);
   const [services, setServices] = useState<IService[]>([]);
-  const [selectedService, setSelectedService] = useState<string>('service');
+  const [selectedService, setSelectedService] = useState<string>('');
 
   useEffect(() => {
     (async () => {
@@ -101,11 +101,19 @@ const DayScreen: FC = () => {
         client: {
           uid: appState.currentUserInfo.uid,
           confirmed: false,
+          service: selectedService,
         },
         isReserved: true,
       });
       await bookATime({ ...newTimeItem });
       await getDay();
+      toast({
+        title: 'Запись отправлена в обработку, ожидайте подтверждения',
+        status: 'success',
+        isClosable: true,
+        duration: 5000,
+        position: 'top'
+      });
     } catch (e) {
       console.log(e);
     } finally {
@@ -116,8 +124,9 @@ const DayScreen: FC = () => {
   const getServicesList = async () => {
     try {
       const list = await getServices();
-      setServices(Object.values(list).sort((a, b) => Number(b.price) - Number(a.price)));
-      setSelectedService(services[0].id)
+      const formatedList = Object.values(list).sort((a, b) => Number(b.price) - Number(a.price)).filter(el => el.isMain);
+      setServices(formatedList);
+      setSelectedService(formatedList[0].title);
     } catch (e) {
       console.log(e);
     }
@@ -125,7 +134,7 @@ const DayScreen: FC = () => {
 
   const closeTimeForm = () => {
     setTimeForm(false);
-    setSelectedService('service');
+    setSelectedService(services[0].title);
   }
 
   return (
@@ -142,7 +151,7 @@ const DayScreen: FC = () => {
         {
           timeList.length < 1 &&
           <h6 className={styles.timeTitle}>
-            Доступного для записи времени пока нет, но вы можете уточнить о возможности записи вас на удобное вам время
+            Доступного для записи времени пока нет, но вы можете уточнить о возможности записи вас на удобное вам время через instagram
           </h6>
         }
         <ul className={styles.timeList}>
@@ -222,7 +231,7 @@ const DayScreen: FC = () => {
               services.map(item => (
                 <option
                   key={item.id}
-                  value={item.id}>
+                  value={item.title}>
                   {item.title}
                 </option>
               ))
@@ -233,7 +242,7 @@ const DayScreen: FC = () => {
             <h6 className={styles.serviceTitle}>в услугу входит:</h6>
             <ul className={styles.serviceList}>
               {
-                services.find(el => el.id === selectedService)?.servicesList.map(item => (
+                services.find(el => el.title === selectedService)?.servicesList.map(item => (
                   <li
                     key={item.id}
                     className={styles.serviceItem}>
