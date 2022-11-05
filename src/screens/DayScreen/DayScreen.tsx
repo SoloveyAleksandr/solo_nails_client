@@ -85,8 +85,18 @@ const DayScreen: FC = () => {
   }, [timeList]);
 
   const reserveTime = (time: ITimeItem) => {
-    setTimeItem(time);
-    setTimeForm(true);
+    if (appState.currentUserInfo.name || appState.currentUserInfo.instagram) {
+      setTimeItem(time);
+      setTimeForm(true);
+    } else {
+      toast({
+        title: 'Для записи нужно добавить контактные данные (имя или instagram)',
+        status: 'warning',
+        isClosable: true,
+        duration: 5000,
+        position: 'top'
+      });
+    }
   }
 
   const setReserve = async () => {
