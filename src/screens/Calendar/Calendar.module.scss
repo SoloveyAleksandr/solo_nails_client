@@ -20,6 +20,19 @@
             margin-top: 60px;
         }
     }
+
+    &Adress {
+        text-transform: none;
+        opacity: 0.8;
+        display: flex;
+        align-items: center;
+
+        .menuIcon {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+    }
 }
 
 .calendarGrid {
