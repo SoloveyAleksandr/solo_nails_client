@@ -175,9 +175,10 @@ const DayScreen: FC = () => {
                 //     `${styles.timeItem} ${styles.reserved} ${item.client.uid === appState.currentUserInfo.uid && styles.userReserve}` : styles.timeItem}
                 className={`
                   ${styles.timeItem}
-                  ${item.client.uid !== appState.currentUserInfo.uid && hasReserve ? styles.close : ''}
+                  
                   ${item.client.uid || item.isOffline.status ? `${styles.timeItem} ${styles.reserved} ${item.client.uid === appState.currentUserInfo.uid && styles.userReserve}` : ''}
                 `}
+                // ${item.client.uid !== appState.currentUserInfo.uid && hasReserve ? styles.close : ''}
               >
                 <span className={styles.timeItemTime}>
                   {item.time}
@@ -262,6 +263,12 @@ const DayScreen: FC = () => {
                 ))
               }
             </ul>
+            <div className={styles.servicePrice}>
+              <span className={styles.servicePriceText}>Примерная стоимость {services.find(el => el.title === selectedService)?.price}р.</span>
+              <span className={styles.servicePriceInfo}>
+                (Окончательная стоимость будет зависеть от доп. услуг)
+              </span>
+            </div>
           </div>
         </div>
 

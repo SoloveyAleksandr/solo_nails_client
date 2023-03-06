@@ -22,9 +22,11 @@
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.05);
   }
+
   100% {
     transform: scale(1);
   }
@@ -50,14 +52,17 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
+
     .formTitle {
       margin: 0;
     }
   }
+
   &Link {
     position: relative;
     display: flex;
     justify-content: center;
+
     &::after {
       content: "";
       position: absolute;
@@ -66,6 +71,7 @@
       background-color: $black;
       bottom: 0;
     }
+
     &Container {
       display: flex;
       align-items: center;
@@ -87,6 +93,7 @@
     font-weight: 700;
     margin-top: 15px;
   }
+
   &List {
     list-style: none;
   }
@@ -134,7 +141,7 @@
     display: flex;
     align-items: center;
 
-    &Item + &Item {
+    &Item+&Item {
       margin-left: 20px;
     }
   }
@@ -173,17 +180,34 @@
 
 .service {
   margin-bottom: 25px;
+
   &Select {
     margin-bottom: 15px;
   }
+
   &Title {
     text-transform: uppercase;
     font-size: 12px;
     font-weight: 700;
   }
+
   &List {
     list-style: none;
     list-style: decimal;
     padding: 0 0 0 20px;
+  }
+
+  &Price {
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+
+    &Text {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    &Info {
+      font-size: 12px;
+    }
   }
 }

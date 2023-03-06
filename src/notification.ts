@@ -38,6 +38,7 @@ export const useTelegram = () => {
       - ${user?.name} %0A
       - ${user?.instagram} %0A
       - ${user?.phone}
+    ${time.client.service ? ` %0A Услуга: ${time.client.service}` : ""}
     `;
     const MESSAGE_URL = `${CHAT_URL}&text=${messege}`;
 
